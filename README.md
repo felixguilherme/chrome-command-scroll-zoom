@@ -1,7 +1,11 @@
 <div align="center">
     <br />
     <p>
-        <img src="./assets/logo.png" width="120" alt="Stirling PDF logo" />
+        <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="./assets/logo.png">
+            <source media="(prefers-color-scheme: light)" srcset="./assets/logo-dark.png">
+            <img alt="Command+Scroll Zoom logo." width="120">
+        </picture>
         <h1>Command+Scroll Zoom</h1>
     </p>
     <p>
