@@ -9,7 +9,7 @@
         <h1>Command+Scroll Zoom</h1>
     </p>
     <p>
-        A Chrome extension that allows you to smothly zoom in and out web pages using <code>Cmd+Scroll</code>
+        Smothly zoom in and out web pages using <code>Cmd+Scroll</code>
     </p>
     <br />
 </div>
