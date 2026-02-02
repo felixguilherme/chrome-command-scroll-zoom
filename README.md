@@ -1,11 +1,7 @@
 <div align="center">
     <br />
     <p>
-        <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="./assets/logo.png">
-            <source media="(prefers-color-scheme: light)" srcset="./assets/logo-dark.png">
-            <img alt="Command+Scroll Zoom logo." width="120">
-        </picture>
+        <img src="./assets/128.png" alt="Command+Scroll Zoom logo." width="128">
         <h1>Command+Scroll Zoom</h1>
     </p>
     <p>
