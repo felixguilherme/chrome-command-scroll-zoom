@@ -12,9 +12,11 @@
 
 ## Installation
 
-### Extension Store
-
-Soon.
+### Extension Stores
+- Google Chrome (in review)
+- <a title="Download extension from Edge Add-ons" href="https://microsoftedge.microsoft.com/addons/detail/commandscroll-zoom/dliidbdlfdmkeoihneknapjalpninlmo" target="_blank">
+    Microsoft Edge
+</a>
 
 ### Manually
 
