@@ -13,10 +13,13 @@
 ## Installation
 
 ### Extension Stores
-- Google Chrome (in review)
+
+- <a title="Download extension from Chrome Web Store" href="https://chromewebstore.google.com/detail/command+scroll-zoom/afnejjeldjdjoccijfbaeejoidmnkebl" target="_blank">
+      Google Chrome
+  </a>
 - <a title="Download extension from Edge Add-ons" href="https://microsoftedge.microsoft.com/addons/detail/commandscroll-zoom/dliidbdlfdmkeoihneknapjalpninlmo" target="_blank">
-    Microsoft Edge
-</a>
+      Microsoft Edge
+  </a>
 
 ### Manually
 
