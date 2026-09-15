@@ -5,7 +5,7 @@
         <h1>Command+Scroll Zoom</h1>
     </p>
     <p>
-        Smothly zoom in and out web pages using <code>Cmd+Scroll</code>
+        Smoothly zoom in and out web pages using <code>Cmd+Scroll</code>.
     </p>
     <br />
 </div>
