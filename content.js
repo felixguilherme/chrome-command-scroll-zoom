@@ -2,17 +2,25 @@ const modifierKey = "metaKey";
 
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 3.0;
-const STEP = 0.1; // 10% per scroll tick
+const ZOOM_INCREMENT = 0.05;
+const MAX_STEP = 0.05; // 5% maximum per scroll event
+const PIXELS_PER_STEP = 25;
+const LINE_HEIGHT = 40;
 const SMOOTHING = 0.35;
 
 let currentZoom = 1.0;
 let targetZoom = 1.0;
+let rawTargetZoom = 1.0;
 let animating = false;
 let initialized = false;
 let initializing = false;
-let pendingSteps = 0;
+let pendingZoomDelta = 0;
 
 const clampZoom = (value) => Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value));
+const snapZoom = (value) =>
+  Number(
+    (Math.round(clampZoom(value) / ZOOM_INCREMENT) * ZOOM_INCREMENT).toFixed(2),
+  );
 
 const startAnimation = () => {
   if (animating) return;
@@ -26,13 +34,15 @@ const initializeZoom = () => {
   chrome.runtime.sendMessage({ action: "getZoom" }, (response) => {
     const zoomLevel = Number(response?.zoomLevel) || 1.0;
     currentZoom = clampZoom(zoomLevel);
-    targetZoom = currentZoom;
+    rawTargetZoom = currentZoom;
+    targetZoom = snapZoom(rawTargetZoom);
     initialized = true;
     initializing = false;
 
-    if (pendingSteps) {
-      targetZoom = clampZoom(targetZoom + pendingSteps * STEP);
-      pendingSteps = 0;
+    if (pendingZoomDelta) {
+      rawTargetZoom = clampZoom(rawTargetZoom + pendingZoomDelta);
+      targetZoom = snapZoom(rawTargetZoom);
+      pendingZoomDelta = 0;
       startAnimation();
     }
   });
@@ -58,24 +68,37 @@ chrome.runtime.onMessage.addListener((message) => {
   const zoomLevel = Number(message.zoomLevel);
   if (zoomLevel > 0) {
     currentZoom = clampZoom(zoomLevel);
-    targetZoom = currentZoom;
+    rawTargetZoom = currentZoom;
+    targetZoom = snapZoom(rawTargetZoom);
     initialized = true;
   }
 });
 
 const handleWheel = (event) => {
-  if (!event[modifierKey]) return;
+  if (!event[modifierKey] || event.deltaY === 0) return;
 
   event.preventDefault();
 
-  const direction = event.deltaY > 0 ? -1 : 1;
+  const deltaMultiplier =
+    event.deltaMode === WheelEvent.DOM_DELTA_LINE
+      ? LINE_HEIGHT
+      : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+        ? window.innerHeight
+        : 1;
+  const zoomAmount = Math.min(
+    MAX_STEP,
+    (Math.abs(event.deltaY) * deltaMultiplier * MAX_STEP) / PIXELS_PER_STEP,
+  );
+  const zoomDelta = event.deltaY > 0 ? -zoomAmount : zoomAmount;
+
   if (!initialized) {
-    pendingSteps += direction;
+    pendingZoomDelta += zoomDelta;
     initializeZoom();
     return;
   }
 
-  targetZoom = clampZoom(targetZoom + direction * STEP);
+  rawTargetZoom = clampZoom(rawTargetZoom + zoomDelta);
+  targetZoom = snapZoom(rawTargetZoom);
   startAnimation();
 };
 

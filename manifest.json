@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Command+Scroll Zoom",
-  "version": "1.0.2",
-  "description": "Smothly zoom in and out web pages using Cmd+Scroll",
+  "version": "1.0.4",
+  "description": "Smoothly zoom in and out web pages using Cmd+Scroll.",
   "homepage_url": "https://guilhermes.dev",
   "background": {
     "service_worker": "background.js"
